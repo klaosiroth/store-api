@@ -9,6 +9,8 @@ const errorMiddleware = require('./middleware/error-handler')
 
 // middleware
 
+const connectDB = require('./db/connect')
+
 app.use(express.json())
 
 // routes
@@ -24,9 +26,10 @@ app.use(errorMiddleware)
 
 const port = process.env.PORT || 3000
 
-const start = () => {
+const start = async () => {
   try {
     // connectDB
+    await connectDB(process.env.MONGO_URI)
     app.listen(port, console.log(`Server is listening on port ${port}...`))
   } catch (error) {
     console.log(error)
