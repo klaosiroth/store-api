@@ -2,7 +2,7 @@ const Product = require('../models/product')
 
 const getAllProductsStatic = async (req, res) => {
   // {baseUrl}}/products?sort=-name,price&fields=name,price&limit=10&skip=5
-  const products = await Product.find({})
+  const products = await Product.find({ price: { $gt: 30 } })
   .sort('name')         // sort   => {{baseUrl}}/products?sort=name
   .select('name price') // select => {{baseUrl}}/products?fields=name,price
   .limit(10)            // limit  => {{baseUrl}}/products?limit=name,price
