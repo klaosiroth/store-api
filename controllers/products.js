@@ -1,7 +1,12 @@
 const Product = require('../models/product')
 
 const getAllProductsStatic = async (req, res) => {
-  const products = await Product.find({}).select('name price') // select => {{baseUrl}}/products?fields=name,price
+  // {baseUrl}}/products?sort=-name,price&fields=name,price&limit=10&skip=5
+  const products = await Product.find({})
+  .sort('name')         // sort   => {{baseUrl}}/products?sort=name
+  .select('name price') // select => {{baseUrl}}/products?fields=name,price
+  .limit(10)            // limit  => {{baseUrl}}/products?limit=name,price
+  .skip(5)              // skip   => {{baseUrl}}/products?skip=name,price
   res.status(200).json({ nbHits: products.length, products })
 }
 
