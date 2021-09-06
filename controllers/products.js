@@ -17,6 +17,7 @@ const getAllProducts = async (req, res) => {
     name,
     sort,
     fields,
+    numericFilters,
   } = req.query
   const queryObject = {}
 
@@ -31,6 +32,22 @@ const getAllProducts = async (req, res) => {
   // search google: mongodb query operators
   if (name) {
     queryObject.name = { $regex: name, $options: 'i' }
+  }
+
+  if (numericFilters) {
+    const operatorMap = {
+      '>': '$gt',
+      '>=': '$gte',
+      '=': '$eq',
+      '<': '$lt',
+      '<=': '$lte',
+    }
+    const regEx = /\b(<|>|>=|=|<|<=)\b/g
+    let filters = numericFilters.replace(
+      regEx,
+      (match) => `-${operatorMap[match]}-`
+    )
+    console.log(filters)
   }
   console.log(queryObject)
 
