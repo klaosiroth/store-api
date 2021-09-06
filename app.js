@@ -10,6 +10,7 @@ const errorMiddleware = require('./middleware/error-handler')
 // middleware
 
 const connectDB = require('./db/connect')
+const productsRouter = require('./routes/products')
 
 app.use(express.json())
 
@@ -18,6 +19,8 @@ app.use(express.json())
 app.get('/', (req, res) => {
   res.send('Store API')
 })
+
+app.use('/api/v1/products', productsRouter)
 
 // products route
 
